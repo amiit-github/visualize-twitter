@@ -1,13 +1,23 @@
-var util = require('util'),
-    twitter = require('twitter');
-var twit = new twitter({
-    consumer_key: '3ljHWhbS9vQwFF9JAXxLw',
-    consumer_secret: 'HV0mea8vs3zAzWgroNKmPgXkgQHuZVZjXvqTSblVmM',
-    access_token_key: '115687733-A1RsnXnLB790weyJXHtrFnSjzEjG0vqSyTtmmt14',
-    access_token_secret: 'xxWuOw0GBanbZd1mA9WcZEYkmlsMo5wkHnhII0VW6b7OS'
+/*
+Setup Express server
+*/
+var express = require('express'),
+app = module.exports = express(),
+server = require('http').createServer(app),
+routes = require('./routes'),
+api = require('./routes/api');
+
+app.configure(function() {
+  app.locals.pretty = true;
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.static(__dirname + '/public'));
+  app.use('/js', express.static(__dirname + '/js'));
+  app.use(app.router);
+});
+server.listen(3000, function(){
+  console.log("Express server up and running.");
 });
 
-
-app.get('/', twit.gatekeeper('/login'), routes.index);
-app.get('/login', routes.login);
-app.get('/twauth', twit.login());
+app.get('/', routes.index);
+app.get('/api/trends/:woeid', api.trends);
