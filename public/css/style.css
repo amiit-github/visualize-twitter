@@ -61,7 +61,7 @@
     top: 50%;
     right: 0;
     left: 0;
-    font: bold 1em 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font: bold 0.7em 'Helvetica Neue', Helvetica, Arial, sans-serif; /*Change font of text in tiles*/
     text-shadow: 0 0.025em 0 rgba(0, 0, 0, 0.1);
     vertical-align: baseline;
     padding: 0 0.5em;
