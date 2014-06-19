@@ -1,12 +1,12 @@
 <html>
 <head>
 
-    <title>Google Trends - Hot Searches</title>
+    <title>Twitter Trends - Hot topics</title>
     
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <meta name="description" content="A visualization of the latest hot searches from Google Trends.">
+    <meta name="description" content="A visualization of the latest hot trends on Twitter.">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -30,17 +30,21 @@
         
 
         <div id="matrix-button" class="idleable"></div>
-        <div id="desc" class="idleable" dir="ltr">Showing the latest hot trends in <div id="region"><span>Worldwide</span></div>.</div>
+
+        <div id="desc" class="idleable" dir="ltr">Showing the latest hot trends for <span id="trend"><b>#Hashtag</b></span> in <div id="region"><span>Country</span></div>.<span id="load-status"></span></div>
 
         <div id="matrix-select-container"></div>
         
         <select id="region-select">
      
-            <!-- <option value="0">All Regions</option>
-            
+            <!-- 
             <option class="sort" value="30">Argentina</option>
             
-            <option class="sort" value="8">Australia</option> -->            
+            -->            
+
+        </select>
+
+        <select id="trend-select">           
 
         </select>
         
@@ -49,12 +53,7 @@
             <a href="http://www.google.com/trends/hottrends">
                 <span>Trends</span>
             </a>
-        </div>
-
-        
-
-        
-        
+        </div>           
     </div>
 
 </div>
@@ -85,6 +84,7 @@ $(document).ready(function() {
             count++;
         });
         console.log(count+' countries added');
+        $('#region span').html($("#region-select option:first").html());
     });
 });
     function addOption(selectbox,text,value, classname) {

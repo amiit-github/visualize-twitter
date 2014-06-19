@@ -1202,6 +1202,23 @@ body.idle .idleable {
   display: inline-block;
   border-bottom: 1px dotted #fff; }
 
+#trend {
+  font-weight: bold;
+  display: inline-block;
+  border-bottom: 1px dotted #fff; }
+
+#trend-select {
+  -webkit-tap-highlight-color: transparent;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  opacity: 0;
+  width: 100px;
+  cursor: pointer;
+  position: fixed;
+  margin-top: -1px;
+  z-index: 3; }
+  [dir=rtl] #trend-select {
+    direction: rtl; }
+
 #region-select {
   -webkit-tap-highlight-color: transparent;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";

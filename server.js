@@ -20,7 +20,6 @@ var uristring = 'mongodb://localhost/viztrends';
 app.get('/', routes.index);  
 app.get('/api/trends/:woeid', api.trends);
 app.get('/api/available', api.available_cntry);
-app.get('/data', fileManager.render_data);
 app.get('/data/:fname', fileManager.render_data);
 
 

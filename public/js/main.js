@@ -84,7 +84,7 @@
       })();
 
   init();
-  getTerms(function(t) {
+  var updateMatrix = function(t) {
 
     termsByRegion = t;
 
@@ -93,7 +93,9 @@
       initializeMatrix();
     }
 
-  });
+  }
+
+  getTerms(updateMatrix);
 
   function getTerms(callback) {
 
@@ -101,7 +103,8 @@
       callback({ 1: url.terms.split(/ ?, ?/) });
     } else { 
       /*$.getJSON(url.tsq ? '/api/tsqterms/' : '/api/terms/', callback);*/
-      $.getJSON('/data/23424848', callback);
+
+      $.getJSON('/data/1', callback);
 
     }
 
@@ -215,6 +218,27 @@
 
     });
 
+    // ----------------------------------------------
+    // 
+    // Trend Selector
+    // 
+    // ----------------------------------------------
+
+    var $trendSelect = $('#trend-select');
+    $('#trend').prepend($trendSelect);
+
+    // Alphabetize region select, using locale specific sort.
+    var itms = $trendSelect.children('option.sort').get();
+    itms.sort(function(a, b) {
+
+      // find portion of string following first capital letter.
+      // (sort den Niederland as Niederland)
+      var a = uppercasePortion($(a).text());
+      var b = uppercasePortion($(b).text());
+      return a.localeCompare(b);
+
+    });
+
     function isUppercase(c) {
       return c != c.toLowerCase() && c == c.toUpperCase();
     }
@@ -234,17 +258,79 @@
     }
 
     $.each(items, function(k, v) { $regionSelect.append(v); });
+    $.each(itms, function(k, v) { $trendSelect.append(v); });
 
 
 
     $regionSelect.change(function() {
 
-      setRegion($(this).val());
+                // If data loaded for a region Update display
+              var p = $(this).val();
+              var status = updateTrendsList(p);
 
-      //_gaq.push(['_trackEvent', 'Region', 'Change', $(this).val()]);
-      updateURL();
+              status.done(function(msg) {
+
+                $selected = $("#region-select option[value='"+p+"']");
+                $("#region-select").val(p);
+                $("#region span").html($selected.html());
+                $("#region-select").width($("#region span").width());
+                //$("span#load-status").html(msg);
+
+                trendChangeAction();
+              });
+
+              status.fail(function(err) {
+                $("span#load-status").html(err);
+
+                setTimeout(function() {
+                  $("span#load-status").empty();
+                }, 2000);        
+              });
+
+    });
+
+     $trendSelect.change(function() {
+
+              trendChangeAction($(this).val());
  
     });
+
+    function trendChangeAction(p) {
+
+              setTrend(p);
+
+              updateURL();
+
+              $selected = $("#trend-select option[value='"+p+"']");
+              $("#trend-select").val(p);
+              $("#trend b").html($selected.html());
+              $("#region-select").width($("#trend b").width());
+    }
+
+    function updateTrendsList(woeid) {
+
+      var deferred = $.Deferred();
+
+        $.getJSON('data/'+woeid, function(data) {
+          if(data.hasOwnProperty('status') && data.status == false){
+            console.log('No data avaliable for region : ' + woeid);
+            deferred.reject('No data avaliable for that country');
+          }
+          else {
+            var selectbox = document.getElementById("trend-select");
+            $('#trend-select option').remove();
+
+            $.each(data, function(key, value) {
+                addOption(selectbox, key, key, 'sort');
+            });
+            //update the tweets data array
+            getTerms(updateMatrix(data));
+            deferred.resolve('Trends list updated');
+          }
+
+      });
+        return deferred.promise();
+    }
 
     function resetIdleTimeout() {
       
@@ -270,7 +356,7 @@
       })
 
     setMatrix(url.int('r', 1)-1, url.int('c', 1)-1);
-    setRegion(url.int('p', 0));
+    setTrend(url.int('p', 0));
 
     lastUpdate = (+new Date());
 
@@ -408,27 +494,26 @@
 
   }
 
-  function setRegion(p) {
+  function setTrend(p) {
 
     var termsRaw;
     pipe = p;
     
     // all regions
     if (p == 0 || !(p in termsByRegion)) {
+
+      if(!(p in termsByRegion))
+      console.log(termsByRegion);
+
       termsRaw = _.flatten(termsByRegion);
     } else { 
       termsRaw = termsByRegion[p];
+
     }
 
     terms = _.shuffle(_.uniq(termsRaw));
 
-    // Update display
 
-    $selected = $("#region-select option[value='"+p+"']");
-    $("#region-select").val(p);
-    $("#region span").html($selected.html());
-
-    $("#region-select").width($("#region span").width());
 
     forceNext();
 
