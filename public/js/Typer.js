@@ -15,7 +15,7 @@
 
         // Randomize a "global" speed.
         // (Some people are just slow typers.)
-        this.speedMultiplier = this.forceSpeed ? this.forceSpeed : Math.random() * 0.25 + 0.2; //url.float('speed', Math.random() * 0.25 + 0.2);
+        this.speedMultiplier = this.forceSpeed ? this.forceSpeed : Math.random() * 0.8 + 0.2; //url.float('speed', Math.random() * 0.25 + 0.2);
 
         this.str = str;
         this.charIndex = 0;

@@ -1,0 +1,29 @@
+{
+  "name": "visualize-trends",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "~4.4.3",
+    "twit": "~1.1.15",
+    "logfmt": "~1.1.2",
+    "underscore": "~1.6.0",
+    "q": "~1.0.1",
+    "json2csv": "~2.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amiit-github/visualize-twitter"
+  },
+  "author": "amiit-github",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amiit-github/visualize-twitter/issues"
+  },
+  "homepage": "https://github.com/amiit-github/visualize-twitter"
+}

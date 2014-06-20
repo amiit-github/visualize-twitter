@@ -4,7 +4,7 @@
       FADE_DELAY = 5000,  
 
       FADE_DUR = 500,
-      MIN_DELAY = 3000,
+      MIN_DELAY = 5000,
       WIPE_DELAY = Math.max(url.int('delay', MIN_DELAY), MIN_DELAY),
       TITLE_DELAY = 6000,
       SMALL_WINDOW = 500, // see _shared.scss, fallback for browsers without mq
@@ -197,6 +197,27 @@
       $matrixSelectContainer.removeClass('showing');
     });
 
+
+
+
+        $.getJSON('data/countries/', function(data) {
+          var count =0 ;
+          var selectbox = document.getElementById("region-select");
+          $.each(data, function(key, value) {
+              addOption(selectbox, value, key, 'sort');
+              count++;
+          });
+          console.log(count+' countries added');
+          $('#region span').html($("#region-select option:first").html());
+
+          //fetch trends for first hashtag
+          var promise = updateTrendsList($("#region-select option:first").val());
+          promise.done(function() {
+            trendChangeAction();
+          });
+
+
+        });
     // ----------------------------------------------
     // 
     // Region Selector
@@ -217,6 +238,8 @@
       return a.localeCompare(b);
 
     });
+
+
 
     // ----------------------------------------------
     // 
@@ -297,6 +320,10 @@
 
     function trendChangeAction(p) {
 
+              if(p == undefined) {
+                p = $('#trend-select option:first').val();
+              }
+
               setTrend(p);
 
               updateURL();
@@ -304,7 +331,7 @@
               $selected = $("#trend-select option[value='"+p+"']");
               $("#trend-select").val(p);
               $("#trend b").html($selected.html());
-              $("#region-select").width($("#trend b").width());
+              $("#trend-select").width($("#trend b").width());
     }
 
     function updateTrendsList(woeid) {
@@ -384,7 +411,7 @@
 
       if (showLogo(wiper)) {
 
-        wiper.showArbitrary('<img src="/orangeroom/logo.png">', reallyDelayedNext)
+        wiper.showArbitrary('<img src="/images/logo1.png">', reallyDelayedNext)
 
       } else if (showTitle(wiper)) {
         wiper.typer.forceSpeed = 10;
@@ -608,5 +635,13 @@
     });
 
   }
+
+  function addOption(selectbox,text,value, classname) {
+        var optn = document.createElement("OPTION");
+        optn.text = text;
+        optn.value = value;
+        $(optn).addClass(classname);
+        selectbox.options.add(optn);
+    }
 
 })();

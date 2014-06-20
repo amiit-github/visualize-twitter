@@ -7,6 +7,8 @@ var express  = require('express'),
 	api = require('./routes/api'),
 	fileManager = require('./routes/fileManager');
 
+var logfmt = require("logfmt");
+
 
 var uristring = 'mongodb://localhost/viztrends';
 
@@ -25,7 +27,7 @@ app.get('/data/:fname', fileManager.render_data);
 
 
 // listen (start app with node server.js) 
-var port = Number(process.env.PORT || 8080);
+var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
   console.log("Listening on " + port);
 });

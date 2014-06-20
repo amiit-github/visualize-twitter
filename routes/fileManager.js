@@ -5,7 +5,6 @@ exports.render_data = function(req, res) {
 	var file = './data/'+filename+'.json';
 	
 
-
 	path.exists(file, function(exists) { 
 	  if (exists) { 
 	    res.sendfile(file);

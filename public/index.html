@@ -50,7 +50,8 @@
         
 
         <div id="logo">
-            <a href="http://www.google.com/trends/hottrends">
+            <a href="#">
+            <img src="">
                 <span>Trends</span>
             </a>
         </div>           
@@ -76,24 +77,9 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-    $.getJSON('data/countries/', function(data) {
-        console.log(data); var count =0 ;
-        var selectbox = document.getElementById("region-select");
-        $.each(data, function(key, value) {
-            addOption(selectbox, value, key, 'sort');
-            count++;
-        });
-        console.log(count+' countries added');
-        $('#region span').html($("#region-select option:first").html());
-    });
+
 });
-    function addOption(selectbox,text,value, classname) {
-        var optn = document.createElement("OPTION");
-        optn.text = text;
-        optn.value = value;
-        $(optn).addClass(classname);
-        selectbox.options.add(optn);
-    }
+    
 
 </script>
 
