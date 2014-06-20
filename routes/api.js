@@ -16,14 +16,15 @@ exports.trends = function(req, res) {
     if (typeof data === "undefined") {
       res.json({status: false});
     } else {
-      res.json({trends: data, status: true});
 
       var TrendsFile = {};
       var trends = data[0].trends;
 
       get_all_tweets(trends, TrendsFile).then(function(v) {
         writeJSONtoFile('./data/'+woeid+'.json', TrendsFile);
-
+        res.json({status: true});
+      }, function(err) {
+        res.json({status: false, err: 'error fetching tweets'});
       });
         
     }

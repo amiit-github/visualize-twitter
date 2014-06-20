@@ -12,7 +12,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="google" value="notranslate">
     <meta name="robots" content="noindex, nofollow">
-
+    <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
     <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
 
@@ -30,8 +30,10 @@
         
 
         <div id="matrix-button" class="idleable"></div>
+        <div id="refresh-button" class="idleable" title="Refresh trends"></div>
+        <div id="refresh-status" class="idleable"></div>
 
-        <div id="desc" class="idleable" dir="ltr">Showing the latest hot trends for <span id="trend"><b>#Hashtag</b></span> in <div id="region"><span>Country</span></div>.<span id="load-status"></span></div>
+        <div id="desc" class="idleable" dir="ltr">Showing the latest hot trends for <span id="trend" title="Select trend"><b>#Hashtag</b></span> in <div id="region" title="Select region"><span>Country</span></div>.<span id="load-status"></span></div>
 
         <div id="matrix-select-container"></div>
         
@@ -49,7 +51,7 @@
         </select>
         
 
-        <div id="logo">
+        <div id="logo" title="Project by Amit Shinde">
             <a href="#">
             <img src="">
                 <span>Trends</span>
@@ -61,6 +63,7 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
+
 
 <script src="/js/vendor/classList.js"></script>
 <script src="/js/vendor/jquery.easing.1.3.js"></script>

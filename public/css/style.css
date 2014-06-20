@@ -1197,6 +1197,26 @@ body.idle .idleable {
   #desc a {
     color: #fff; }
 
+#refresh-button {
+  position: absolute;
+  z-index: 2;
+  width: 22px;
+  height: 23px;
+  background: url(../images/refresh.png) center center no-repeat;
+  cursor: pointer;
+    
+  top:10px;
+  right: 30px; }
+  [dir=rtl] #refresh-button {
+    left: auto;
+    right: 10px; }
+
+  #refresh-status {
+  position: absolute;
+  z-index: 2;
+  top:40px;
+  right: 6px; }
+
 #region {
   font-weight: bold;
   display: inline-block;

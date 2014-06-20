@@ -8,7 +8,7 @@
       WIPE_DELAY = Math.max(url.int('delay', MIN_DELAY), MIN_DELAY),
       TITLE_DELAY = 6000,
       SMALL_WINDOW = 500, // see _shared.scss, fallback for browsers without mq
-      TITLE = 'Hot searches on Google right now.',
+      TITLE = 'Hot trends on Twitter right now.',
       wipers = [],
       termsByRegion,
       terms,
@@ -218,6 +218,8 @@
 
 
         });
+
+
     // ----------------------------------------------
     // 
     // Region Selector
@@ -287,14 +289,50 @@
 
     $regionSelect.change(function() {
 
-                // If data loaded for a region Update display
-              var p = $(this).val();
-              var status = updateTrendsList(p);
+                regionChangeAction($(this).val())
+
+    });
+
+     $trendSelect.change(function() {
+
+              trendChangeAction($(this).val());
+ 
+    });
+
+    var $refreshSelect = $('#refresh-button');
+
+    $refreshSelect.click(function() {
+
+      //show loading message
+      $('#refresh-status').html('Loading...');
+      var current_woeid = $("#region-select :selected").val();
+
+      $.getJSON('/api/trends/'+current_woeid, function(result) {
+        console.log(result);
+        if(result.status == true) {
+
+          regionChangeAction(current_woeid);
+
+          $('#refresh-status').html('Successful');
+            setTimeout(function() {
+              $("#refresh-status").empty();
+              }, 2000); 
+        }
+        else {
+          console.log('Failed to refresh tweets');
+        }
+      })
+    });
+
+    function regionChangeAction(woeid) {
+      // If data loaded for a region Update display
+              
+              var status = updateTrendsList(woeid);
 
               status.done(function(msg) {
 
-                $selected = $("#region-select option[value='"+p+"']");
-                $("#region-select").val(p);
+                $selected = $("#region-select option[value='"+woeid+"']");
+                $("#region-select").val(woeid);
                 $("#region span").html($selected.html());
                 $("#region-select").width($("#region span").width());
                 //$("span#load-status").html(msg);
@@ -309,14 +347,8 @@
                   $("span#load-status").empty();
                 }, 2000);        
               });
+    }
 
-    });
-
-     $trendSelect.change(function() {
-
-              trendChangeAction($(this).val());
- 
-    });
 
     function trendChangeAction(p) {
 
